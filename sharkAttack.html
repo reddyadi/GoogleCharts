@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawSeriesChart);
+
+    function drawSeriesChart() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['ID', 'Unprovoked', 'Non-Fatal and Unprovoked', 'Region',     'Fatal and Unprovoked'],
+        ['USA',    1657,              1513,      'Northern Hemp',  144],
+        ['AUS',    904,              645,      'Southern Hemp',       259],
+        ['RSA',    395,                299,      'Southern Hemp',       96  ],
+        ['PNG',    118,              63,      'Southern Hemp',    55],
+        ['BRZ',    86,              56,         'Southern Hemp',         30],
+        ['NZL',    79,              55,       'Southern Hemp',    24],
+        ['MEX',    62,              27,      'Southern Hemp',    35],
+        ['FIJ',    58,              36,      'Southern Hemp',    22]
+      ]);
+
+      var options = {
+        title: 'Unprovoked Shark attacks based on Hemisphere',
+        hAxis: {title: 'Unprovoked'},
+        vAxis: {title: 'Non-Fatal'},
+        bubble: {textStyle: {fontSize: 11}}
+      };
+
+      var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+      chart.draw(data, options);
+    }
+
+
+
+
+    </script>
+  </head>
+  <body>
+
+    <div id="series_chart_div" style="width: 900px; height: 500px;"></div>
+
+  
+
+  </body>
+</html>
