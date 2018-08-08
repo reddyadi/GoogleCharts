@@ -1,81 +1,36 @@
 <html>
-  <!DOCTYPE html>
-  <html lang="en" dir="ltr">
-   <head>
-  	 <meta charset="utf-8">
-  	 <title>Gauge Chart</title>
-  	 <!-- <link rel="stylesheet" href="css/style.css"> -->
-   </head>
-  <body>
-    <div id="chart_div" style="width: 400px; height: 120px;"></div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div>
-      <form class="" id="formValue" onsubmit="drawChart()">
-        Temperature: <br>
-        <input id="temp" type="number" name="" value=""><br>
-        Pressure: <br>
-        <input id="press" type="number" name="" value=""><br>
-        <input type="submit" name="" value="Submit">
-      </form>
-    </div>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-       google.charts.load('current', {'packages':['gauge']});
-       google.charts.setOnLoadCallback(drawChart);
+ <head>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['gauge']});
+    google.charts.setOnLoadCallback(drawGauge);
+    var gaugeOptions = {min: 0, max: 280, yellowFrom: 200, yellowTo: 250,
+      redFrom: 250, redTo: 280, minorTicks: 5};
+    var gauge;
+    function drawGauge() {
+      gaugeData = new google.visualization.DataTable();
+      gaugeData.addColumn('number', 'Engine');
+      gaugeData.addColumn('number', 'Torpedo');
+      gaugeData.addRows(2);
+      gaugeData.setCell(0, 0, 120);
+      gaugeData.setCell(0, 1, 80);
+      gauge = new google.visualization.Gauge(document.getElementById('gauge_div'));
+      gauge.draw(gaugeData, gaugeOptions);
+    }
+    function changeTemp(dir) {
+      var x=document.getElementById("engine").value;
+      var y=document.getElementById("torpedo").value;
+      gaugeData.setValue(0, 0, x);
+      gaugeData.setValue(0, 1, y);
+      gauge.draw(gaugeData, gaugeOptions);
+    }
+  </script>
+ </head>
+ <body>
+  <div id="gauge_div" style="width:280px; height: 140px;"></div><br/> <br/> <br/>
+ Enter a value for Engine here: <input type="text" name="engine" id="engine"  /> <br/> <br/> <br/>
+ Enter a value for Torpedo here: <input type="text" name="torpedo" id="torpedo"  /><br/> <br/> <br/>
+  <input type="button" value="Change values" onclick="changeTemp()" />
 
-       function drawChart() {
-
-         var temp = 30;
-         var press = 40;
-
-         temp = document.getElementById('temp').value;
-         press = document.getElementById('press').value;
-         console.log(temp);
-
-         var data = google.visualization.arrayToDataTable([
-           ['Label', 'Value'],
-           ['Temperature', temp],
-           ['Pressure', press],
-           ['Speed', temp]
-         ]);
-
-         var options = {
-           width: 1000, height: 500,
-           greenFrom: 0, greenTo: 75,
-           redFrom: 90, redTo: 100,
-           yellowFrom:75, yellowTo: 90,
-           minorTicks: 5
-         };
-
-         var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
-
-         chart.draw(data, options);
-
-         setInterval(function() {
-           data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
-           chart.draw(data, options);
-         }, 5000);
-         setInterval(function() {
-           data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
-           chart.draw(data, options);
-         }, 5000);
-         setInterval(function() {
-           data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
-           chart.draw(data, options);
-         }, 5000);
-       }
-     </script>
-  </body>
+ </body>
 </html>
